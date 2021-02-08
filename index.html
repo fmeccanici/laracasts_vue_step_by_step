@@ -1,33 +1,29 @@
 <head>
     <title></title>
-
-    <body>
-        <div id="root">
-            <ul>
-                <li v-for="name in names" v-text="name"></li>
-            </ul>
-
-            <input id="input" type="text" v-model="newName">
-            <button v-on:click="addName">Add name</button>
-        </div>
-        <script src="https://unpkg.com/vue@2.6.12/dist/vue.js"></script>
-        <script>
-            var app = new Vue({
-                el: '#root',
-                data: {
-                    newName: '',
-                    names: ['Joe', 'Mary', 'Jane', 'Jack']
-                },
-                methods: {
-                    addName() {
-                        this.names.push(this.newName);
-
-                        this.newName = '';
-                    }
-                }
-            });
-
-
-        </script>
-    </body>
+    <style type="text/css">
+        .is_loading { background: red; }
+    </style>
 </head>
+
+<body>
+    <div id="root">
+        <button :class="{ 'is_loading': isLoading }" @click="toggleClass">Click Me</button>
+    </div>
+
+    <script src="https://unpkg.com/vue@2.6.12/dist/vue.js"></script>
+
+    <script>
+        var app = new Vue({
+            el: '#root',
+            data: {
+               isLoading: false
+            },
+
+            methods: {
+                toggleClass() {
+                    this.isLoading = true;
+                }
+            }
+        });
+    </script>
+</body>
