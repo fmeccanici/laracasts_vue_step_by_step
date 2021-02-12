@@ -1,29 +1,68 @@
+<html>
 <head>
     <title></title>
-    <style type="text/css">
-        .is_loading { background: red; }
-    </style>
 </head>
 
 <body>
     <div id="root">
-        <button :class="{ 'is_loading': isLoading }" @click="toggleClass">Click Me</button>
+        <h2>All Tasks</h2>
+        <ul>
+            <li v-for="task in tasks" v-text="task.description"></li>
+        </ul>
+
+        <h2>Incomplete Tasks</h2>
+        <ul>
+            <li v-for="task in incompleteTasks" v-text="task.description"></li>
+        </ul>
+        <h2>Complete Tasks</h2>
+        <ul>
+            <li v-for="task in completeTasks" v-text="task.description"></li>
+        </ul>
+        <button v-on:click="setTaskToComplete">Complete upper task</button>
     </div>
 
     <script src="https://unpkg.com/vue@2.6.12/dist/vue.js"></script>
-
     <script>
         var app = new Vue({
-            el: '#root',
-            data: {
-               isLoading: false
-            },
+           el: '#root',
+           data: {
+               tasks: [
+                   { description: 'Go to the store', completed: true},
+                   { description: 'Finish screencast', completed: false},
+                   { description: 'Make donation', completed: false},
+                   { description: 'Clear inbox', completed: false},
+                   { description: 'Make dinner', completed: false},
+                   { description: 'Clean room', completed: true},
 
-            methods: {
-                toggleClass() {
-                    this.isLoading = true;
+               ]
+           },
+            computed: {
+               incompleteTasks() {
+
+                   // same thing but newer syntax
+                   return this.tasks.filter(task => ! task.completed);
+
+                   // this.tasks.filter(function (task) {
+                   //     return ! task.completed;
+                   // })
+               },
+                completeTasks() {
+
+                    // same thing but newer syntax
+                    return this.tasks.filter(task => task.completed);
+
+                    // this.tasks.filter(function (task) {
+                    //     return ! task.completed;
+                    // })
                 }
+            },
+            methods: {
+               setTaskToComplete() {
+                   this.tasks[0].completed = false
+               }
             }
+
         });
     </script>
 </body>
+</html>
